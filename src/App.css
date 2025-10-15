@@ -21,9 +21,9 @@
     height: 350px;
 }
 
-.card div {
+/* .card div {
     margin-top: 10px;
-}
+} */
 
 .card-container {
     display: flex;
@@ -47,4 +47,17 @@
 .navbar div:hover,
 .active {
     background: rgb(52, 52, 230);
+}
+
+.cardContent {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cardIcon {
+    margin-right: 25px;
+}
+
+.favoriteRight {
+    margin-right: 45px;
 }

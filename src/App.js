@@ -1,7 +1,8 @@
 import './App.css';
-import { Header } from './components/Header';
-import { Card } from './components/Card';
 import { useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { MainPage } from './MainPage';
+import { FavoritePage } from './FavoritePage';
 
 const products = [
   {
@@ -117,10 +118,11 @@ const products = [
 function App() {
   const [inputName, setInputName] = useState('')
   const [openNavbar, setOpenNavbar] = useState(false)
-  const [category, setCategory] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('')
+  const [favId, setFavId] = useState([])
 
   const filteredProduct = products.filter((el) =>
-    el.category.includes(category) &&
+    el.category.includes(selectedCategory) &&
     el.name.toLowerCase().includes(inputName.toLowerCase()))
 
   const handleInput = (text) => {
@@ -132,38 +134,42 @@ function App() {
   }
 
   const handleChangeCategory = (changedCategory) => {
-    if (changedCategory === category) {
-      setCategory('')
+    if (changedCategory === selectedCategory) {
+      setSelectedCategory('')
       return
     }
-    setCategory(changedCategory)
+    setSelectedCategory(changedCategory)
 
   }
 
+  const addToFav = (id) => {
+    if (favId.includes(id)) {
+      setFavId(favId.filter((i) => i !== id))
+      return
+    }
+    setFavId([...favId, id])
+  }
+
+  const favProducts = products.filter(product => favId.includes(product.id))
+
   return (
     <div>
-      <Header handleInput={handleInput} handleOpenNav={handleOpenNav} />
-      {openNavbar && (
-        <div className='navbar'>
-          <div onClick={() => handleChangeCategory('phone')}
-            className={category === 'phone' && 'active'}>Phones</div>
-          <div onClick={() => handleChangeCategory('laptop')}
-            className={category === 'laptop' && 'active'}>Laptops</div>
-          <div onClick={() => handleChangeCategory('monitor')}
-            className={category === 'monitor' && 'active'}>Monitors</div>
-        </div>
-      )}
-      <div className='card-container'>
-        {filteredProduct.map((el) => (
-          <Card
-            key={el.id}
-            img={el.img}
-            brand={el.brand}
-            name={el.name}
-            rating={el.rating}
-            price={el.price} />
-        ))}
-      </div>
+      <Routes>
+        <Route path='/' element={
+          <MainPage
+            handleInput={handleInput}
+            handleOpenNav={handleOpenNav}
+            openNavbar={openNavbar}
+            handleChangeCategory={handleChangeCategory}
+            selectedCategory={selectedCategory}
+            filteredProduct={filteredProduct}
+            addToFav={addToFav}
+            favId={favId}
+          />
+        }
+        />
+        <Route path='/favorites' element={<FavoritePage favProducts={favProducts} />} />
+      </Routes>
     </div>
 
   )
