@@ -8,10 +8,10 @@ import { FavoritePage } from './FavoritePage';
 function App() {
 
   const [products, setProducts] = useState([])
+  const [favProducts, setFavProducts] = useState([])
   const [loading, setLoading] = useState(false)
   const [inputName, setInputName] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
-  const [favId, setFavId] = useState([])
 
   const [openNavbar, setOpenNavbar] = useState(false)
 
@@ -25,6 +25,19 @@ function App() {
       })
       .catch((error) => console.log(error))
   }, [inputName, selectedCategory])
+
+  const loadFavorites = () => {
+    fetch(`http://localhost:5000/favorites`)
+      .then((response) => response.json())
+      .then((result) => {
+        setFavProducts(result)
+      })
+      .catch((error) => console.log(error))
+  }
+
+  useEffect(() => {
+    loadFavorites()
+  }, [])
 
   const handleInput = (text) => {
     setInputName(text)
@@ -43,15 +56,22 @@ function App() {
 
   }
 
-  const addToFav = (id) => {
-    if (favId.includes(id)) {
-      setFavId(favId.filter((i) => i !== id))
-      return
+  const addToFav = (products) => {
+    if (favProducts.some((el) => el.id === products.id)) {
+      fetch(`http://localhost:5000/favorites/${products.id}`, {
+        method: "DELETE",
+      }).then(loadFavorites())
     }
-    setFavId([...favId, id])
+    else {
+      fetch(`http://localhost:5000/favorites`, {
+        method: "POST",
+        body: JSON.stringify(products),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then(loadFavorites())
+    }
   }
-
-  const favProducts = products.filter(product => favId.includes(product.id))
 
   return (
     <div>
@@ -65,7 +85,7 @@ function App() {
             selectedCategory={selectedCategory}
             products={products}
             addToFav={addToFav}
-            favId={favId}
+            favId={favProducts.map((prod) => prod.id)}
             loading={loading}
           />
         }

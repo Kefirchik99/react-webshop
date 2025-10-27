@@ -8,13 +8,8 @@ export const FavoritePage = ({ favProducts }) => {
                 {favProducts.length ? (
                     favProducts.map((el) => (
                         <Card
-                            id={el.id}
                             key={el.id}
-                            img={el.img}
-                            brand={el.brand}
-                            name={el.name}
-                            rating={el.rating}
-                            price={el.price}
+                            product={el}
                         />
                     ))
                 ) : (

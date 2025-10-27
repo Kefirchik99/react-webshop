@@ -15,7 +15,7 @@ export const MainPage = ({
 }) => {
     return (
         <>
-            | <Header handleInput={handleInput}
+            <Header handleInput={handleInput}
                 handleOpenNav={handleOpenNav} />
             {loading && <h3>loading...</h3>}
             {openNavbar && (
@@ -25,17 +25,12 @@ export const MainPage = ({
                 />
             )}
             <div className='card-container'>
-                {products.map((el) => (
+                {products.map((product) => (
                     <Card
                         addToFav={addToFav}
                         favId={favId}
-                        id={el.id}
-                        key={el.id}
-                        img={el.img}
-                        brand={el.brand}
-                        name={el.name}
-                        rating={el.rating}
-                        price={el.price} />
+                        product={product}
+                    />
                 ))}
             </div>
         </>

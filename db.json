@@ -108,5 +108,25 @@
       "rating": 2,
       "img": "https://m.media-amazon.com/images/I/61X5FknDWuL._AC_SL1500_.jpg"
     }
+  ],
+  "favorites": [
+    {
+      "id": 1,
+      "brand": "Samsung",
+      "name": "S20",
+      "price": 300,
+      "category": "phone",
+      "rating": 5,
+      "img": "https://m.media-amazon.com/images/I/71Ji+UMQ-gL._AC_SL1498_.jpg"
+    },
+    {
+      "id": 2,
+      "brand": "GPO",
+      "name": "746",
+      "price": 123,
+      "category": "phone",
+      "rating": 4,
+      "img": "https://m.media-amazon.com/images/I/611PFZIL8CL._AC_SL1500_.jpg"
+    }
   ]
 }
