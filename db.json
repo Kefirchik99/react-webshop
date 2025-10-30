@@ -111,15 +111,6 @@
   ],
   "favorites": [
     {
-      "id": 1,
-      "brand": "Samsung",
-      "name": "S20",
-      "price": 300,
-      "category": "phone",
-      "rating": 5,
-      "img": "https://m.media-amazon.com/images/I/71Ji+UMQ-gL._AC_SL1498_.jpg"
-    },
-    {
       "id": 2,
       "brand": "GPO",
       "name": "746",
@@ -127,6 +118,33 @@
       "category": "phone",
       "rating": 4,
       "img": "https://m.media-amazon.com/images/I/611PFZIL8CL._AC_SL1500_.jpg"
+    },
+    {
+      "id": 10,
+      "brand": "MSI",
+      "name": "PRO",
+      "price": 85,
+      "category": "monitor",
+      "rating": 4,
+      "img": "https://m.media-amazon.com/images/I/71moyya-AqL._AC_SL1500_.jpg"
+    },
+    {
+      "id": 4,
+      "brand": "Xiaomi",
+      "name": "A27I",
+      "price": 100,
+      "category": "monitor",
+      "rating": 5,
+      "img": "https://m.media-amazon.com/images/I/51LRt51aLEL._AC_SL1000_.jpg"
+    },
+    {
+      "id": 3,
+      "brand": "Google",
+      "name": "Pixel 10",
+      "price": 880,
+      "category": "phone",
+      "rating": 4,
+      "img": "https://m.media-amazon.com/images/I/614Qf9iukZL._AC_SL1500_.jpg"
     }
   ]
 }

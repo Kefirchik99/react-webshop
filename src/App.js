@@ -1,50 +1,30 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { MainPage } from './MainPage';
-import { FavoritePage } from './FavoritePage';
-
+import { MainPage } from './pages/main/MainPage';
+import { FavoritePage } from './pages/favorites/FavoritePage';
+import { fetchFavorite } from './pages/favorites/favoritesSlice';
+import { useDispatch } from 'react-redux';
+import { fetchProducts } from './pages/main/productsSlice';
 
 function App() {
 
-  const [products, setProducts] = useState([])
-  const [favProducts, setFavProducts] = useState([])
-  const [loading, setLoading] = useState(false)
   const [inputName, setInputName] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
+  const [sort, setSort] = useState('')
 
-  const [openNavbar, setOpenNavbar] = useState(false)
-
-  useEffect(() => {
-    setLoading(true)
-    fetch(`http://localhost:5000/products?q=${inputName}&category_like=${selectedCategory}`)
-      .then((response) => response.json())
-      .then((result) => {
-        setLoading(false)
-        setProducts(result)
-      })
-      .catch((error) => console.log(error))
-  }, [inputName, selectedCategory])
-
-  const loadFavorites = () => {
-    fetch(`http://localhost:5000/favorites`)
-      .then((response) => response.json())
-      .then((result) => {
-        setFavProducts(result)
-      })
-      .catch((error) => console.log(error))
-  }
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    loadFavorites()
+    dispatch(fetchProducts({ inputName, selectedCategory, sort }))
+  }, [inputName, selectedCategory, sort])
+
+  useEffect(() => {
+    dispatch(fetchFavorite())
   }, [])
 
   const handleInput = (text) => {
     setInputName(text)
-  }
-
-  const handleOpenNav = () => {
-    setOpenNavbar(!openNavbar)
   }
 
   const handleChangeCategory = (changedCategory) => {
@@ -56,21 +36,12 @@ function App() {
 
   }
 
-  const addToFav = (products) => {
-    if (favProducts.some((el) => el.id === products.id)) {
-      fetch(`http://localhost:5000/favorites/${products.id}`, {
-        method: "DELETE",
-      }).then(loadFavorites())
+  const handleChangeSort = (order) => {
+    if (sort === order) {
+      setSort('')
+      return
     }
-    else {
-      fetch(`http://localhost:5000/favorites`, {
-        method: "POST",
-        body: JSON.stringify(products),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then(loadFavorites())
-    }
+    setSort(order)
   }
 
   return (
@@ -78,19 +49,15 @@ function App() {
       <Routes>
         <Route path='/' element={
           <MainPage
+            sort={sort}
+            handleChangeSort={handleChangeSort}
             handleInput={handleInput}
-            handleOpenNav={handleOpenNav}
-            openNavbar={openNavbar}
             handleChangeCategory={handleChangeCategory}
             selectedCategory={selectedCategory}
-            products={products}
-            addToFav={addToFav}
-            favId={favProducts.map((prod) => prod.id)}
-            loading={loading}
           />
         }
         />
-        <Route path='/favorites' element={<FavoritePage favProducts={favProducts} />} />
+        <Route path='/favorites' element={<FavoritePage />} />
       </Routes>
     </div>
   )

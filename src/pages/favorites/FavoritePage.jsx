@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom"
-import { Card } from "./components/Card"
+import { Card } from "../../components/Card"
+import { useSelector } from "react-redux"
 
 export const FavoritePage = ({ favProducts }) => {
+
+    const favorites = useSelector((state) => state.favorites.favorites)
+
     return (
         <div>
             <div className="card-container">
-                {favProducts.length ? (
-                    favProducts.map((el) => (
+                {favorites.length ? (
+                    favorites.map((el) => (
                         <Card
                             key={el.id}
                             product={el}

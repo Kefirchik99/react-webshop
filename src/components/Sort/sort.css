@@ -1,0 +1,15 @@
+.sort {
+    margin-left: 40px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.sort span {
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.sortActive {
+    color: rgb(140, 34, 238);
+    text-decoration: underline;
+}
