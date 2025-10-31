@@ -1,11 +1,12 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { MainPage } from './pages/main/MainPage';
-import { FavoritePage } from './pages/favorites/FavoritePage';
+import { MainPage } from './pages/main';
+import { FavoritePage } from './pages/favorites';
 import { fetchFavorite } from './pages/favorites/favoritesSlice';
 import { useDispatch } from 'react-redux';
 import { fetchProducts } from './pages/main/productsSlice';
+import { CartPage } from './pages/cart';
 
 function App() {
 
@@ -58,6 +59,7 @@ function App() {
         }
         />
         <Route path='/favorites' element={<FavoritePage />} />
+        <Route path='/cart' element={<CartPage />} />
       </Routes>
     </div>
   )
